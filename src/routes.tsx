@@ -3,11 +3,13 @@ import Home from "./pages/Home/Home";
 import Metrics from "./pages/Metrics/Metrics";
 
 function AllRoutes() {
+  const basename = '/mobilitas';
+  
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<Home />} />
-        <Route path={"/metricas"} element={<Metrics />} />
+        <Route path={basename + "/"} element={<Home />} />
+        <Route path={basename + "/metricas"} element={<Metrics />} />
       </Routes>
     </BrowserRouter>
   );
