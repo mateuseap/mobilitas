@@ -1,7 +1,7 @@
 {
   "name": "mobilitas",
   "private": true,
-  "homepage": "https://mateuseap.github.io/mobilitas/",
+  "homepage": "https://mateuseap.github.io/mobilitas",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
