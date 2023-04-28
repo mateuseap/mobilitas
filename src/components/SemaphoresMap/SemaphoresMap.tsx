@@ -14,6 +14,9 @@ export interface SemaphoreType {
 }
 
 function SemaphoresMap() {
+  const sempahoreImage =
+    "https://i.imgur.com/sxUn59m_d.webp?maxwidth=760&fidelity=grand";
+
   const mapContainerStyle = {
     width: "1280px",
     height: "600px",
@@ -83,6 +86,7 @@ function SemaphoresMap() {
                 lng: semaphore.longitude,
               }}
               key={semaphore.semafororo}
+              icon={sempahoreImage}
             />
           ))}
       </GoogleMap>
