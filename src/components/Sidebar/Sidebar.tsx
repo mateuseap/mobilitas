@@ -40,7 +40,7 @@ function Sidebar() {
         <img
           src={Logo}
           alt="Mobilitas"
-          className="h-11 w-11 rounded-full"
+          className="h-9 w-9"
           draggable="false"
         />
       </div>
