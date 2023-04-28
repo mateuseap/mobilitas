@@ -1,1 +1,0 @@
-@tailwind base;*{scrollbar-width:thin}*::-webkit-scrollbar{width:8px;background:#eeeeee}*::-webkit-scrollbar-track{border-radius:5px}*::-webkit-scrollbar-thumb{background-color:#dfdfdf;border-radius:14px}@tailwind components;@tailwind utilities;@layer base{html{font-family:Satoshi;background-color:#fff;color:#000}}
