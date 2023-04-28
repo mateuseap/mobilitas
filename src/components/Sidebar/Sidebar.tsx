@@ -2,7 +2,7 @@ import { HomeIcon, ChartPieIcon } from "@heroicons/react/24/outline";
 import SidebarItem, { SidebarItemProps } from "../SidebarItem/SidebarItem";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Logo from "../../../public/vite.svg";
+import Logo from "../../../public/logo.svg";
 
 function Sidebar() {
   const actualPath = useLocation().pathname;
