@@ -11,6 +11,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.17",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
     "gh-pages": "^5.0.0",

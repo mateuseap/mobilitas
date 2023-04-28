@@ -26,7 +26,7 @@
 @layer base {
   html {
     font-family: "Satoshi";
-    background-color: white;
-    color: black;
+    background-color: #121212;
+    color: white;
   }
 }
