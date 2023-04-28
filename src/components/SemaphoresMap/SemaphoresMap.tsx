@@ -14,6 +14,9 @@ export interface SemaphoreType {
 }
 
 function SemaphoresMap() {
+  const sempahoreImage =
+    "https://i.imgur.com/sxUn59m_d.webp?maxwidth=760&fidelity=grand";
+
   const mapContainerStyle = {
     width: "1280px",
     height: "600px",
@@ -22,6 +25,32 @@ function SemaphoresMap() {
   const center = {
     lat: -8.05428,
     lng: -34.8813,
+  };
+
+  const options = {
+    disablePointsOfInterest: true,
+    styles: [
+      {
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }],
+      },
+      {
+        featureType: "transit",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }],
+      },
+      {
+        featureType: "road",
+        elementType: "labels.icon",
+        stylers: [{ visibility: "on" }],
+      },
+      {
+        featureType: "road",
+        elementType: "labels.text",
+        stylers: [{ visibility: "on" }],
+      },
+    ],
   };
 
   const fetchSemaphores = async () => {
@@ -47,6 +76,7 @@ function SemaphoresMap() {
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={13}
+        options={options}
       >
         {!result.isLoading &&
           result.data?.map((semaphore: SemaphoreType) => (
@@ -56,6 +86,7 @@ function SemaphoresMap() {
                 lng: semaphore.longitude,
               }}
               key={semaphore.semafororo}
+              icon={sempahoreImage}
             />
           ))}
       </GoogleMap>
