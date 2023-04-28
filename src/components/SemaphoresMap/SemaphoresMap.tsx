@@ -1,5 +1,11 @@
-import { memo } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { memo, useState } from "react";
+import {
+  GoogleMap,
+  InfoWindow,
+  LoadScript,
+  Marker,
+  Polyline,
+} from "@react-google-maps/api";
 import { useQuery } from "@tanstack/react-query";
 
 export interface SemaphoreType {
@@ -53,6 +59,11 @@ function SemaphoresMap() {
     ],
   };
 
+  const path = [
+    { lat: -8.04829, lng: -34.876001 },
+    { lat: -8.04912, lng: -34.874913 },
+  ];
+
   const fetchSemaphores = async () => {
     const response = await fetch("https://plumpflickeringtab.meap0187.repl.co");
 
@@ -69,6 +80,17 @@ function SemaphoresMap() {
     queryFn: fetchSemaphores,
     retry: 2,
   });
+
+  const [selectedSemaphore, setSelectedSemaphore] =
+    useState<SemaphoreType | null>(null);
+
+  const handleMarkerClick = (semaphore: SemaphoreType) => {
+    setSelectedSemaphore(semaphore);
+  };
+
+  const handleInfoWindowClose = () => {
+    setSelectedSemaphore(null);
+  };
 
   return (
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
@@ -87,8 +109,35 @@ function SemaphoresMap() {
               }}
               key={semaphore.semafororo}
               icon={sempahoreImage}
-            />
+              onClick={() => handleMarkerClick(semaphore)}
+            >
+              {selectedSemaphore?.semafororo === semaphore.semafororo && (
+                <InfoWindow onCloseClick={handleInfoWindowClose}>
+                  <div className="text-black">
+                    <h2>
+                      <b>Tipo do semáforo e ID:</b> {semaphore.tipo} | {semaphore.semafororo}
+                    </h2>
+                    <p>
+                      <b>Bairro:</b> {semaphore.bairro}
+                    </p>
+                    <p>
+                      <b>Localização:</b> {semaphore.localizacao1} - {semaphore.localizacao2}
+                    </p>
+                    <p>
+                      <b>Latitude</b> {semaphore.latitude}
+                    </p>
+                    <p>
+                      <b>Longitude:</b> {semaphore.longitude}
+                    </p>
+                    <p>
+                      <b>Funcionamento:</b> {semaphore.funcionamento}
+                    </p>
+                  </div>
+                </InfoWindow>
+              )}
+            </Marker>
           ))}
+        <Polyline path={path} />
       </GoogleMap>
     </LoadScript>
   );
