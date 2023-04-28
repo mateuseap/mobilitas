@@ -38,6 +38,7 @@ function SemaphoresMap() {
   const result = useQuery({
     queryKey: ["semaphores"],
     queryFn: fetchSemaphores,
+    retry: 2,
   });
 
   return (
