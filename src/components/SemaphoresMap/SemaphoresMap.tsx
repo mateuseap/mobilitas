@@ -24,6 +24,32 @@ function SemaphoresMap() {
     lng: -34.8813,
   };
 
+  const options = {
+    disablePointsOfInterest: true,
+    styles: [
+      {
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }],
+      },
+      {
+        featureType: "transit",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }],
+      },
+      {
+        featureType: "road",
+        elementType: "labels.icon",
+        stylers: [{ visibility: "on" }],
+      },
+      {
+        featureType: "road",
+        elementType: "labels.text",
+        stylers: [{ visibility: "on" }],
+      },
+    ],
+  };
+
   const fetchSemaphores = async () => {
     const response = await fetch("https://plumpflickeringtab.meap0187.repl.co");
 
@@ -47,6 +73,7 @@ function SemaphoresMap() {
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={13}
+        options={options}
       >
         {!result.isLoading &&
           result.data?.map((semaphore: SemaphoreType) => (
