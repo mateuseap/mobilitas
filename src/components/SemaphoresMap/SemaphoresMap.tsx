@@ -59,11 +59,6 @@ function SemaphoresMap() {
     ],
   };
 
-  const path = [
-    { lat: -8.04829, lng: -34.876001 },
-    { lat: -8.04912, lng: -34.874913 },
-  ];
-
   const fetchSemaphores = async () => {
     const response = await fetch("https://plumpflickeringtab.meap0187.repl.co");
 
@@ -75,10 +70,28 @@ function SemaphoresMap() {
     return data.result.records;
   };
 
+  const fetchPathsIDs = async () => {
+    const response = await fetch(
+      "https://plumpflickeringtab.meap0187.repl.co/paths"
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data;
+  };
+
   const result = useQuery({
     queryKey: ["semaphores"],
     queryFn: fetchSemaphores,
     retry: 2,
+  });
+
+  const pathsIDs = useQuery({
+    queryKey: ["pathsIDs"],
+    queryFn: fetchPathsIDs,
   });
 
   const [selectedSemaphore, setSelectedSemaphore] =
@@ -101,7 +114,7 @@ function SemaphoresMap() {
         options={options}
       >
         {!result.isLoading &&
-          result.data?.map((semaphore: SemaphoreType) => (
+          result.data?.map((semaphore: SemaphoreType, index: number) => (
             <Marker
               position={{
                 lat: semaphore.latitude,
@@ -115,7 +128,7 @@ function SemaphoresMap() {
                 <InfoWindow onCloseClick={handleInfoWindowClose}>
                   <div className="text-black">
                     <h2>
-                      <b>Tipo do semáforo e ID:</b> {semaphore.tipo} | {semaphore.semafororo}
+                      <b>Tipo do semáforo e ID/Index:</b> {semaphore.tipo} | {semaphore.semafororo}/{index}
                     </h2>
                     <p>
                       <b>Bairro:</b> {semaphore.bairro}
@@ -137,7 +150,23 @@ function SemaphoresMap() {
               )}
             </Marker>
           ))}
-        <Polyline path={path} />
+        {result.data &&
+          pathsIDs.data?.map((pathIDs: any) => {
+            return (
+              <Polyline
+                path={[
+                  {
+                    lat: result.data[pathIDs["id1"]].latitude,
+                    lng: result.data[pathIDs["id1"]].longitude,
+                  },
+                  {
+                    lat: result.data[pathIDs["id2"]].latitude,
+                    lng: result.data[pathIDs["id2"]].longitude,
+                  },
+                ]}
+              />
+            );
+          })}
       </GoogleMap>
     </LoadScript>
   );
