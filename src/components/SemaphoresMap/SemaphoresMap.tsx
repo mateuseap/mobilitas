@@ -25,9 +25,7 @@ function SemaphoresMap() {
   };
 
   const fetchSemaphores = async () => {
-    const response = await fetch(
-      "http://dados.recife.pe.gov.br/api/3/action/datastore_search?resource_id=ab6343e9-c3f2-4d62-9554-5778f9f33738&limit=704"
-    );
+    const response = await fetch("https://plumpflickeringtab.meap0187.repl.co");
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
