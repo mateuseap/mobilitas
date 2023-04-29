@@ -231,9 +231,10 @@ function SemaphoresMap() {
             ))}
           {isSimulation &&
             result.data &&
-            pathsIDs.data?.map((pathIDs: any) => {
+            pathsIDs.data?.map((pathIDs: any, index: number) => {
               return (
                 <Polyline
+                  key={index}
                   path={[
                     {
                       lat: result.data[pathIDs["id1"]].latitude,
