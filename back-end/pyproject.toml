@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mobilitas"
-version = "1.0.0"
+version = "2.0.0"
 description = "Mobilitas back-end"
 authors = ["Mateus Elias <meap@cin.ufpe.br>"]
 
