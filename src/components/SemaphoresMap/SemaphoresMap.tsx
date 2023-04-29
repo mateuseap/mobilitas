@@ -7,6 +7,7 @@ import {
   Polyline,
 } from "@react-google-maps/api";
 import { useQuery } from "@tanstack/react-query";
+import DefaultSemaphore from '../../../public/assets/default_semaphore.webp'
 
 export interface SemaphoreType {
   semafororo: number;
@@ -23,9 +24,6 @@ function SemaphoresMap() {
   const [isSimulation, setIsSimulation] = useState(false);
   const [simulationIDs, setSimulationIDs] = useState<Array<number>>([]);
   const [pathsIDsLoaded, setPathsIDsLoaded] = useState(false);
-
-  const sempahoreImage =
-    "https://i.imgur.com/sxUn59m_d.webp?maxwidth=760&fidelity=grand";
 
   const mapContainerStyle = {
     width: "1280px",
@@ -157,7 +155,7 @@ function SemaphoresMap() {
                   lng: semaphore.longitude,
                 }}
                 key={semaphore.semafororo}
-                icon={sempahoreImage}
+                icon={DefaultSemaphore}
                 onClick={() => handleMarkerClick(semaphore)}
                 visible={
                   !isSimulation
