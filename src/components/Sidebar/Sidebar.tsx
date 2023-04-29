@@ -1,4 +1,8 @@
-import { HomeIcon, ChartPieIcon } from "@heroicons/react/24/outline";
+import {
+  HomeIcon,
+  ChartPieIcon,
+  ArrowRightCircleIcon,
+} from "@heroicons/react/24/outline";
 import SidebarItem, { SidebarItemProps } from "../SidebarItem/SidebarItem";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -8,7 +12,8 @@ function Sidebar() {
   const actualPath = useLocation().pathname;
   const selectedItemValue: { [key: string]: number } = {
     "/": 1,
-    "/metricas": 2,
+    "/simulacao": 2,
+    "/metricas": 3,
   };
   const [selectedItem, setSelectedItem] = useState<number>();
 
@@ -27,6 +32,13 @@ function Sidebar() {
     },
     {
       itemId: 2,
+      link: "/simulacao",
+      tooltipText: "Simulação",
+      defaultIcon: <ArrowRightCircleIcon className="h-6 w-6" />,
+      selectedIcon: <ArrowRightCircleIcon className="h-6 w-6 stroke-black" />,
+    },
+    {
+      itemId: 3,
       link: "/metricas",
       tooltipText: "Métricas",
       defaultIcon: <ChartPieIcon className="h-6 w-6" />,
