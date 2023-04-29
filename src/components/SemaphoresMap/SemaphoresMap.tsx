@@ -23,19 +23,26 @@ export interface SemaphoreType {
   localizacao2: string;
 }
 
-function SemaphoresMap() {
-  const [isSimulation, setIsSimulation] = useState(false);
+export interface SemaphoresMapProps {
+  simulation: boolean;
+  center: { lat: number; lng: number };
+  zoom?: number;
+  highlightIds?: Array<number>;
+}
+
+function SemaphoresMap({
+  simulation,
+  center,
+  zoom = 16,
+  highlightIds,
+}: SemaphoresMapProps) {
+  const [isSimulation, setIsSimulation] = useState(simulation);
   const [simulationIDs, setSimulationIDs] = useState<Array<number>>([]);
   const [pathsIDsLoaded, setPathsIDsLoaded] = useState(false);
 
   const mapContainerStyle = {
     width: "1280px",
     height: "600px",
-  };
-
-  const center = {
-    lat: -8.05428,
-    lng: -34.8813,
   };
 
   const options = {
@@ -162,30 +169,13 @@ function SemaphoresMap() {
 
   return (
     <div className="flex flex-col text-center font-medium text-xl gap-y-2">
-      <div className="flex items-center justify-center gap-x-2">
-        {isSimulation ? "Simulação" : "Todos os semáforos de Recife"}
-        {!isSimulation ? (
-          <button
-            className="bg-white text-black pr-3 pl-3 rounded-full text-sm"
-            onClick={() => setIsSimulation(true)}
-          >
-            SIMULAÇÃO
-          </button>
-        ) : (
-          <button
-            className="bg-white text-black pr-3 pl-3 rounded-full text-sm"
-            onClick={() => setIsSimulation(false)}
-          >
-            DESFAZER
-          </button>
-        )}
-      </div>
+      {isSimulation ? "Simulação" : "Todos os semáforos de Recife"}
       <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           center={center}
-          zoom={16}
           options={options}
+          zoom={zoom}
         >
           {!result.isLoading &&
             pathsIDsLoaded &&
@@ -212,15 +202,13 @@ function SemaphoresMap() {
                   <InfoWindow onCloseClick={handleInfoWindowClose}>
                     <div className="text-black">
                       <h2>
-                        <b>Tipo do semáforo e ID/Index:</b> {semaphore.tipo} |{" "}
-                        {semaphore.semafororo}/{index}
+                        <b>Tipo do semáforo e ID/Index:</b> {semaphore.tipo} | {semaphore.semafororo}/{index}
                       </h2>
                       <p>
                         <b>Bairro:</b> {semaphore.bairro}
                       </p>
                       <p>
-                        <b>Localização:</b> {semaphore.localizacao1} -{" "}
-                        {semaphore.localizacao2}
+                        <b>Localização:</b> {semaphore.localizacao1} - {semaphore.localizacao2}
                       </p>
                       <p>
                         <b>Latitude</b> {semaphore.latitude}
@@ -245,6 +233,19 @@ function SemaphoresMap() {
               const indexId2 = result.data.findIndex(
                 (semaphore: any) => semaphore._id === pathIDs["id2"]
               );
+
+              const polyOptions = {
+                strokeColor: "blue",
+                strokeWeight: 3,
+              };
+
+              if (
+                highlightIds?.includes(indexId1) &&
+                highlightIds?.includes(indexId2)
+              ) {
+                polyOptions["strokeColor"] = "green";
+              }
+
               if (
                 simulationIDs.includes(indexId1) &&
                 simulationIDs.includes(indexId2)
@@ -262,10 +263,7 @@ function SemaphoresMap() {
                         lng: result.data[indexId2].longitude,
                       },
                     ]}
-                    options={{
-                      strokeColor: "blue",
-                      strokeWeight: 3,
-                    }}
+                    options={polyOptions}
                   />
                 );
               }
