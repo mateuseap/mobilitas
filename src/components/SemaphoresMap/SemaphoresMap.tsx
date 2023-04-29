@@ -28,6 +28,7 @@ export interface SemaphoresMapProps {
   center: { lat: number; lng: number };
   zoom?: number;
   highlightIds?: Array<number>;
+  mapContainerStyle?: { width: string; height: string };
 }
 
 function SemaphoresMap({
@@ -35,15 +36,11 @@ function SemaphoresMap({
   center,
   zoom = 16,
   highlightIds,
+  mapContainerStyle = { width: "1280px", height: "600px" },
 }: SemaphoresMapProps) {
-  const [isSimulation, setIsSimulation] = useState(simulation);
+  const [isSimulation] = useState(simulation);
   const [simulationIDs, setSimulationIDs] = useState<Array<number>>([]);
   const [pathsIDsLoaded, setPathsIDsLoaded] = useState(false);
-
-  const mapContainerStyle = {
-    width: "1280px",
-    height: "600px",
-  };
 
   const options = {
     disablePointsOfInterest: true,
@@ -169,7 +166,11 @@ function SemaphoresMap({
 
   return (
     <div className="flex flex-col text-center font-medium text-xl gap-y-2">
-      {isSimulation ? "Simulação" : "Todos os semáforos de Recife"}
+      {isSimulation ? (
+        <div className="font-bold">Simulação</div>
+      ) : (
+        <div className="font-bold">Todos os semáforos de Recife</div>
+      )}
       <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
