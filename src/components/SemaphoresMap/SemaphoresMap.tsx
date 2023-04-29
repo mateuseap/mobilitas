@@ -127,35 +127,38 @@ function SemaphoresMap() {
     1: YellowSemaphore,
     2: GreenSemaphore,
   };
-  
-  const [semaphoreIconMap, setSemaphoreIconMap] = useState<{[key: number]: string}>({});
+
+  const [semaphoreIconMap, setSemaphoreIconMap] = useState<{
+    [key: number]: string;
+  }>({});
 
   // Initialize the icon map with a random icon for each semaphore
   useEffect(() => {
-    const newSemaphoreIconMap: {[key: number]: string} = {};
+    const newSemaphoreIconMap: { [key: number]: string } = {};
     result.data?.forEach((semaphore: SemaphoreType) => {
       const randomNum = Math.floor(Math.random() * 3);
       newSemaphoreIconMap[semaphore.semafororo] = semaphoreIcons[randomNum];
     });
     setSemaphoreIconMap(newSemaphoreIconMap);
   }, [result.data]);
-  
+
   // Update the semaphore icon every 6 seconds (red -> yellow -> green)
   useEffect(() => {
     const interval = setInterval(() => {
-      const newSemaphoreIconMap = {...semaphoreIconMap};
+      const newSemaphoreIconMap = { ...semaphoreIconMap };
       result.data?.forEach((semaphore: SemaphoreType) => {
-        const currentIcon = newSemaphoreIconMap[semaphore.semafororo] || DefaultSemaphore;
+        const currentIcon =
+          newSemaphoreIconMap[semaphore.semafororo] || DefaultSemaphore;
         const currentIndex = Object.values(semaphoreIcons).indexOf(currentIcon);
-        const nextIndex = (currentIndex + 1) % Object.values(semaphoreIcons).length;
+        const nextIndex =
+          (currentIndex + 1) % Object.values(semaphoreIcons).length;
         newSemaphoreIconMap[semaphore.semafororo] = semaphoreIcons[nextIndex];
       });
       setSemaphoreIconMap(newSemaphoreIconMap);
     }, 6000);
-  
+
     return () => clearInterval(interval);
   }, [semaphoreIconMap, result.data]);
-  
 
   return (
     <div className="flex flex-col text-center font-medium text-xl gap-y-2">
@@ -193,7 +196,9 @@ function SemaphoresMap() {
                   lng: semaphore.longitude,
                 }}
                 key={semaphore.semafororo}
-                icon={semaphoreIconMap[semaphore.semafororo] || DefaultSemaphore}
+                icon={
+                  semaphoreIconMap[semaphore.semafororo] || DefaultSemaphore
+                }
                 onClick={() => handleMarkerClick(semaphore)}
                 visible={
                   !isSimulation
@@ -232,23 +237,32 @@ function SemaphoresMap() {
           {isSimulation &&
             result.data &&
             pathsIDs.data?.map((pathIDs: any, index: number) => {
-              const indexId1 = result.data.findIndex((semaphore: any) => semaphore._id === pathIDs["id1"]);
-              const indexId2 = result.data.findIndex((semaphore: any) => semaphore._id === pathIDs["id2"]);
-              return (
-                <Polyline
-                  key={index}
-                  path={[
-                    {
-                      lat: result.data[indexId1].latitude,
-                      lng: result.data[indexId1].longitude,
-                    },
-                    {
-                      lat: result.data[indexId2].latitude,
-                      lng: result.data[indexId2].longitude,
-                    },
-                  ]}
-                />
+              const indexId1 = result.data.findIndex(
+                (semaphore: any) => semaphore._id === pathIDs["id1"]
               );
+              const indexId2 = result.data.findIndex(
+                (semaphore: any) => semaphore._id === pathIDs["id2"]
+              );
+              if (
+                simulationIDs.includes(indexId1) &&
+                simulationIDs.includes(indexId2)
+              ) {
+                return (
+                  <Polyline
+                    key={index}
+                    path={[
+                      {
+                        lat: result.data[indexId1].latitude,
+                        lng: result.data[indexId1].longitude,
+                      },
+                      {
+                        lat: result.data[indexId2].latitude,
+                        lng: result.data[indexId2].longitude,
+                      },
+                    ]}
+                  />
+                );
+              }
             })}
         </GoogleMap>
       </LoadScript>
