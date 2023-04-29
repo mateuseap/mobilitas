@@ -8,19 +8,19 @@ CORS(app)
 
 @app.route('/')
 def home():
-    f = open('semaphoresData.json')
+    f = open('files/semaphoresData.json')
     data = json.load(f)
     return data
 
 @app.route('/paths')
 def paths():
-    f = open('generalGraph.json')
+    f = open('files/generalGraph.json')
     data = json.load(f)
     return data
 
 @app.route('/solution')
 def solution():
-    f = open('sol.json')
+    f = open('files/sol.json')
     data = json.load(f)
     return data
 
