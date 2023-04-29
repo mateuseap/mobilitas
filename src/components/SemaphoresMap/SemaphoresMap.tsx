@@ -232,17 +232,19 @@ function SemaphoresMap() {
           {isSimulation &&
             result.data &&
             pathsIDs.data?.map((pathIDs: any, index: number) => {
+              const indexId1 = result.data.findIndex((semaphore: any) => semaphore._id === pathIDs["id1"]);
+              const indexId2 = result.data.findIndex((semaphore: any) => semaphore._id === pathIDs["id2"]);
               return (
                 <Polyline
                   key={index}
                   path={[
                     {
-                      lat: result.data[pathIDs["id1"]].latitude,
-                      lng: result.data[pathIDs["id1"]].longitude,
+                      lat: result.data[indexId1].latitude,
+                      lng: result.data[indexId1].longitude,
                     },
                     {
-                      lat: result.data[pathIDs["id2"]].latitude,
-                      lng: result.data[pathIDs["id2"]].longitude,
+                      lat: result.data[indexId2].latitude,
+                      lng: result.data[indexId2].longitude,
                     },
                   ]}
                 />
