@@ -34,7 +34,8 @@ function Simulation() {
       {solution && solution.data !== undefined && (
         <div className="font-medium">
           Score do trajeto sem otimização: {solution.data["path_naive_score"]} /
-          Score do trajeto com a otimização: {solution.data["path_better_score"]}
+          Score do trajeto com a otimização:{" "}
+          {solution.data["path_better_score"]}
         </div>
       )}
     </DefaultPage>
