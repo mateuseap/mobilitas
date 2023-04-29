@@ -145,7 +145,7 @@ function SemaphoresMap() {
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           center={center}
-          zoom={13}
+          zoom={16}
           options={options}
         >
           {!result.isLoading &&
