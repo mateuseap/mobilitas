@@ -166,7 +166,11 @@ function SemaphoresMap({
 
   return (
     <div className="flex flex-col text-center font-medium text-xl gap-y-2">
-      {isSimulation ? "Simulação" : "Todos os semáforos de Recife"}
+      {isSimulation ? (
+        <div className="font-bold">Simulação</div>
+      ) : (
+        <div className="font-bold">Todos os semáforos de Recife</div>
+      )}
       <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
