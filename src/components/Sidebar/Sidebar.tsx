@@ -36,11 +36,11 @@ function Sidebar() {
 
   return (
     <aside className="h-screen sticky top-0 w-32 pt-8 flex flex-col items-center z-20">
-      <div className="h-16 w-16 pr-0.5 flex items-center justify-center bg-[#dedede] rounded-full">
+      <div className="h-16 w-16 pl-0.25 flex items-center justify-center bg-[#dedede] rounded-full">
         <img
           src={Logo}
           alt="Mobilitas"
-          className="h-9 w-9"
+          className="h-10 w-10"
           draggable="false"
         />
       </div>
