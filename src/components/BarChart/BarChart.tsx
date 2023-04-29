@@ -40,7 +40,7 @@ const BarChart: React.FC<Props> = ({ data, labels }) => {
         style: {
           colors: "#ffffff",
         },
-        formatter: function (value: string, timestamp?: number, opts?: any) {
+        formatter: function (value: string) {
           return `${value}`;
         },
       },
