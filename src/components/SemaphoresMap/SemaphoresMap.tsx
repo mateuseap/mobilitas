@@ -7,6 +7,10 @@ import {
   Polyline,
 } from "@react-google-maps/api";
 import { useQuery } from "@tanstack/react-query";
+import DefaultSemaphore from "../../../public/assets/default_semaphore.webp";
+import RedSemaphore from "../../../public/assets/red_semaphore.webp";
+import YellowSemaphore from "../../../public/assets/yellow_semaphore.webp";
+import GreenSemaphore from "../../../public/assets/green_semaphore.webp";
 
 export interface SemaphoreType {
   semafororo: number;
@@ -23,9 +27,6 @@ function SemaphoresMap() {
   const [isSimulation, setIsSimulation] = useState(false);
   const [simulationIDs, setSimulationIDs] = useState<Array<number>>([]);
   const [pathsIDsLoaded, setPathsIDsLoaded] = useState(false);
-
-  const sempahoreImage =
-    "https://i.imgur.com/sxUn59m_d.webp?maxwidth=760&fidelity=grand";
 
   const mapContainerStyle = {
     width: "1280px",
@@ -121,6 +122,41 @@ function SemaphoresMap() {
     }
   }, [pathsIDs]);
 
+  const semaphoreIcons: { [key: number]: string } = {
+    0: RedSemaphore,
+    1: YellowSemaphore,
+    2: GreenSemaphore,
+  };
+  
+  const [semaphoreIconMap, setSemaphoreIconMap] = useState<{[key: number]: string}>({});
+
+  // Initialize the icon map with a random icon for each semaphore
+  useEffect(() => {
+    const newSemaphoreIconMap: {[key: number]: string} = {};
+    result.data?.forEach((semaphore: SemaphoreType) => {
+      const randomNum = Math.floor(Math.random() * 3);
+      newSemaphoreIconMap[semaphore.semafororo] = semaphoreIcons[randomNum];
+    });
+    setSemaphoreIconMap(newSemaphoreIconMap);
+  }, [result.data]);
+  
+  // Update the semaphore icon every 6 seconds (red -> yellow -> green)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newSemaphoreIconMap = {...semaphoreIconMap};
+      result.data?.forEach((semaphore: SemaphoreType) => {
+        const currentIcon = newSemaphoreIconMap[semaphore.semafororo] || DefaultSemaphore;
+        const currentIndex = Object.values(semaphoreIcons).indexOf(currentIcon);
+        const nextIndex = (currentIndex + 1) % Object.values(semaphoreIcons).length;
+        newSemaphoreIconMap[semaphore.semafororo] = semaphoreIcons[nextIndex];
+      });
+      setSemaphoreIconMap(newSemaphoreIconMap);
+    }, 6000);
+  
+    return () => clearInterval(interval);
+  }, [semaphoreIconMap, result.data]);
+  
+
   return (
     <div className="flex flex-col text-center font-medium text-xl gap-y-2">
       <div className="flex items-center justify-center gap-x-2">
@@ -157,7 +193,7 @@ function SemaphoresMap() {
                   lng: semaphore.longitude,
                 }}
                 key={semaphore.semafororo}
-                icon={sempahoreImage}
+                icon={semaphoreIconMap[semaphore.semafororo] || DefaultSemaphore}
                 onClick={() => handleMarkerClick(semaphore)}
                 visible={
                   !isSimulation
