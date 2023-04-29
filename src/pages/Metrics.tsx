@@ -4,8 +4,8 @@ import Card, { CardProps } from "../components/Card/Card";
 import { useQuery } from "@tanstack/react-query";
 
 function Metrics() {
-  const data = [10, 20, 30, 40, 50];
-  const labels = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
+  const data = [531, 136, 2, 3, 32];
+  const labels = ["E/Git", "E", "E/DIG", "E/GIt", "No Label"];
 
   const fetchSolution = async () => {
     const response = await fetch(
