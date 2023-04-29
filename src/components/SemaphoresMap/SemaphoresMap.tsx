@@ -145,7 +145,7 @@ function SemaphoresMap() {
         <GoogleMap
           mapContainerStyle={mapContainerStyle}
           center={center}
-          zoom={13}
+          zoom={16}
           options={options}
         >
           {!result.isLoading &&
@@ -171,15 +171,13 @@ function SemaphoresMap() {
                   <InfoWindow onCloseClick={handleInfoWindowClose}>
                     <div className="text-black">
                       <h2>
-                        <b>Tipo do semáforo e ID/Index:</b> {semaphore.tipo} |{" "}
-                        {semaphore.semafororo}/{index}
+                        <b>Tipo do semáforo e ID/Index:</b> {semaphore.tipo} | {semaphore.semafororo}/{index}
                       </h2>
                       <p>
                         <b>Bairro:</b> {semaphore.bairro}
                       </p>
                       <p>
-                        <b>Localização:</b> {semaphore.localizacao1} -{" "}
-                        {semaphore.localizacao2}
+                        <b>Localização:</b> {semaphore.localizacao1} - {semaphore.localizacao2}
                       </p>
                       <p>
                         <b>Latitude</b> {semaphore.latitude}
