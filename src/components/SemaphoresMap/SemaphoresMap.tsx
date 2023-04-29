@@ -212,13 +212,15 @@ function SemaphoresMap() {
                   <InfoWindow onCloseClick={handleInfoWindowClose}>
                     <div className="text-black">
                       <h2>
-                        <b>Tipo do semáforo e ID/Index:</b> {semaphore.tipo} | {semaphore.semafororo}/{index}
+                        <b>Tipo do semáforo e ID/Index:</b> {semaphore.tipo} |{" "}
+                        {semaphore.semafororo}/{index}
                       </h2>
                       <p>
                         <b>Bairro:</b> {semaphore.bairro}
                       </p>
                       <p>
-                        <b>Localização:</b> {semaphore.localizacao1} - {semaphore.localizacao2}
+                        <b>Localização:</b> {semaphore.localizacao1} -{" "}
+                        {semaphore.localizacao2}
                       </p>
                       <p>
                         <b>Latitude</b> {semaphore.latitude}
@@ -260,6 +262,10 @@ function SemaphoresMap() {
                         lng: result.data[indexId2].longitude,
                       },
                     ]}
+                    options={{
+                      strokeColor: "blue",
+                      strokeWeight: 3,
+                    }}
                   />
                 );
               }
