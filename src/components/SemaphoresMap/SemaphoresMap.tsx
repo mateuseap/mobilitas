@@ -38,7 +38,7 @@ function SemaphoresMap({
   highlightIds,
   mapContainerStyle = { width: "1280px", height: "600px" },
 }: SemaphoresMapProps) {
-  const [isSimulation, setIsSimulation] = useState(simulation);
+  const [isSimulation] = useState(simulation);
   const [simulationIDs, setSimulationIDs] = useState<Array<number>>([]);
   const [pathsIDsLoaded, setPathsIDsLoaded] = useState(false);
 
