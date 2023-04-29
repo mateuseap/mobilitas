@@ -28,6 +28,7 @@ export interface SemaphoresMapProps {
   center: { lat: number; lng: number };
   zoom?: number;
   highlightIds?: Array<number>;
+  mapContainerStyle?: { width: string; height: string };
 }
 
 function SemaphoresMap({
@@ -35,15 +36,11 @@ function SemaphoresMap({
   center,
   zoom = 16,
   highlightIds,
+  mapContainerStyle = { width: "1280px", height: "600px" },
 }: SemaphoresMapProps) {
   const [isSimulation, setIsSimulation] = useState(simulation);
   const [simulationIDs, setSimulationIDs] = useState<Array<number>>([]);
   const [pathsIDsLoaded, setPathsIDsLoaded] = useState(false);
-
-  const mapContainerStyle = {
-    width: "1280px",
-    height: "600px",
-  };
 
   const options = {
     disablePointsOfInterest: true,
