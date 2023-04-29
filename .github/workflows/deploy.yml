@@ -32,6 +32,7 @@ jobs:
 
       - name: Build & Deploy
         run: |
+          cd front-end
           npm install
           npm run build
           npm run deploy
