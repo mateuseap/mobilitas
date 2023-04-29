@@ -31,9 +31,12 @@ function Simulation() {
         highlightIds={[33, 35, 395, 96, 682]}
         mapContainerStyle={{ width: "1280px", height: "570px" }}
       />
-      <div className="font-medium">
-        Score do trajeto sem otimização: {solution.data['path_naive_score']} / Score do trajeto com a otimização: {solution.data['path_better_score']}
-      </div>
+      {solution && solution.data !== undefined && (
+        <div className="font-medium">
+          Score do trajeto sem otimização: {solution.data["path_naive_score"]} /
+          Score do trajeto com a otimização: {solution.data["path_better_score"]}
+        </div>
+      )}
     </DefaultPage>
   );
 }
